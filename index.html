@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoDrive - Compre ou Alugue seu Carro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2563eb',
+                        secondary: '#1e40af',
+                        accent: '#3b82f6',
+                        dark: '#1f2937',
+                        light: '#f9fafb',
+                    },
+                    fontFamily: {
+                        sans: ['Montserrat', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        .carousel {
+            transition: transform 0.5s ease-in-out;
+        }
+        
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+        
+        .vehicle-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .vehicle-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .search-form {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .banner-gradient {
+            background: linear-gradient(to right, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.1));
+        }
+    </style>
+</head>
+<body class="font-sans bg-gray-50">
+    <!-- Header/Navigation -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center">
+                    <a href="#" class="flex items-center">
+                        <i class="fas fa-car text-3xl text-primary mr-2"></i>
+                        <span class="text-xl font-bold text-dark">AutoDrive</span>
+                    </a>
+                </div>
+                
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#" class="text-dark hover:text-primary font-medium">Home</a>
+                    <div class="dropdown relative">
+                        <button class="text-dark hover:text-primary font-medium flex items-center">
+                            Comprar <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                        </button>
+                        <div class="dropdown-menu absolute hidden bg-white shadow-lg rounded-md mt-2 py-2 w-48">
+                            <a href="#" class="block px-4 py-2 hover:bg-gray-100">Carros Novos</a>
+                            <a href="#" class="block px-4 py-2 hover:bg-gray-100">Carros Usados</a>
+                            <a href="#" class="block px-4 py-2 hover:bg-gray-100">Financiamento</a>
+                        </div>
+                    </div>
+                    <div class="dropdown relative">
+                        <button class="text-dark hover:text-primary font-medium flex items-center">
+                            Alugar <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                        </button>
+                        <div class="dropdown-menu absolute hidden bg-white shadow-lg rounded-md mt-2 py-2 w-48">
+                            <a href="#" class="block px-4 py-2 hover:bg-gray-100">Diária</a>
+                            <a href="#" class="block px-4 py-2 hover:bg-gray-100">Mensal</a>
+                            <a href="#" class="block px-4 py-2 hover:bg-gray-100">Longo Prazo</a>
+                        </div>
+                    </div>
+                    <a href="#" class="text-dark hover:text-primary font-medium">Sobre Nós</a>
+                    <a href="#" class="text-dark hover:text-primary font-medium">Contato</a>
+                </nav>
+                
+                <div class="flex items-center space-x-4">
+                    <button class="p-2 text-gray-600 hover:text-primary">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <button class="p-2 text-gray-600 hover:text-primary">
+                        <i class="fas fa-user"></i>
+                    </button>
+                    <button class="md:hidden p-2 text-gray-600 hover:text-primary">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section with Carousel -->
+    <section class="relative h-96 md:h-[500px] overflow-hidden">
+        <div class="carousel flex h-full w-full transition-transform duration-500">
+            <div class="min-w-full h-full relative">
+                <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                     alt="Luxury Cars" class="w-full h-full object-cover">
+                <div class="absolute inset-0 banner-gradient flex items-center">
+                    <div class="container mx-auto px-4 text-white">
+                        <h1 class="text-4xl md:text-5xl font-bold mb-4">Os melhores carros para compra e aluguel</h1>
+                        <p class="text-xl mb-6">Encontre o veículo perfeito para suas necessidades</p>
+                        <div class="flex flex-wrap gap-4">
+                            <a href="#" class="bg-primary hover:bg-secondary px-6 py-3 rounded-lg font-medium">Comprar Carro</a>
+                            <a href="#" class="bg-white hover:bg-gray-100 text-dark px-6 py-3 rounded-lg font-medium">Alugar Carro</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="absolute bottom-6 left-0 right-0 flex justify-center space-x-2">
+            <button class="w-3 h-3 rounded-full bg-white bg-opacity-50 hover:bg-opacity-100"></button>
+            <button class="w-3 h-3 rounded-full bg-white bg-opacity-50 hover:bg-opacity-100"></button>
+            <button class="w-3 h-3 rounded-full bg-white bg-opacity-50 hover:bg-opacity-100"></button>
+        </div>
+    </section>
+
+    <!-- Search Section -->
+    <section class="container mx-auto px-4 -mt-12 md:-mt-20 z-10 relative">
+        <div class="bg-white search-form rounded-xl p-6 shadow-lg">
+            <div class="flex flex-wrap justify-center">
+                <div class="w-full md:w-auto px-2 mb-4 md:mb-0">
+                    <label class="block text-gray-700 text-sm font-medium mb-2">Tipo de Operação</label>
+                    <select class="w-full md:w-48 px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary">
+                        <option>Comprar</option>
+                        <option>Alugar</option>
+                    </select>
+                </div>
+                <div class="w-full md:w-auto px-2 mb-4 md:mb-0">
+                    <label class="block text-gray-700 text-sm font-medium mb-2">Marca</label>
+                    <select class="w-full md:w-48 px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary">
+                        <option>Todas Marcas</option>
+                        <option>Volkswagen</option>
+                        <option>Ford</option>
+                        <option>Chevrolet</option>
+                        <option>Fiat</option>
+                        <option>Hyundai</option>
+                    </select>
+                </div>
+                <div class="w-full md:w-auto px-2 mb-4 md:mb-0">
+                    <label class="block text-gray-700 text-sm font-medium mb-2">Modelo</label>
+                    <select class="w-full md:w-48 px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary">
+                        <option>Todos Modelos</option>
+                        <option>Gol</option>
+                        <option>Onix</option>
+                        <option>HB20</option>
+                        <option>Argo</option>
+                        <option>Ka</option>
+                    </select>
+                </div>
+                <div class="w-full md:w-auto px-2 mb-4 md:mb-0">
+                    <label class="block text-gray-700 text-sm font-medium mb-2">Preço Máx.</label>
+                    <select class="w-full md:w-48 px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary">
+                        <option>Qualquer Preço</option>
+                        <option>Até R$ 30.000</option>
+                        <option>Até R$ 50.000</option>
+                        <option>Até R$ 80.000</option>
+                        <option>Até R$ 100.000</option>
+                        <option>Acima de R$ 100.000</option>
+                    </select>
+                </div>
+                <div class="w-full md:w-auto px-2 flex items-end">
+                    <button class="w-full md:w-auto bg-primary hover:bg-secondary text-white px-6 py-2 rounded-lg font-medium flex items-center">
+                        <i class="fas fa-search mr-2"></i> Buscar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Vehicles -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-dark mb-2">Veículos em Destaque</h2>
+                <div class="w-20 h-1 bg-primary mx-auto"></div>
+                <p class="text-gray-600 mt-4 max-w-2xl mx-auto">Confira nossos melhores veículos disponíveis para compra e aluguel</p>
+            </div>
+            
+            <div class="flex mb-8 justify-center">
+                <div class="flex space-x-4">
+                    <button class="px-6 py-2 bg-primary text-white rounded-lg font-medium">Compra</button>
+                    <button class="px-6 py-2 bg-white text-gray-700 hover:bg-gray-100 rounded-lg font-medium">Aluguel</button>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                <!-- Vehicle Card 1 -->
+                <div class="bg-white rounded-lg overflow-hidden shadow-md vehicle-card">
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1542282088-fe8426682b8f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80" 
+                             alt="Volkswagen Golf" class="w-full h-48 object-cover">
+                        <div class="absolute top-2 left-2 bg-primary text-white text-xs px-2 py-1 rounded">Novo</div>
+                        <div class="absolute top-2 right-2 text-white bg-gray-900 bg-opacity-50 rounded-full p-2">
+                            <i class="fas fa-heart hover:text-red-500"></i>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-lg font-semibold text-dark">Volkswagen Golf</h3>
+                            <span class="text-primary font-bold">R$ 120.000</span>
+                        </div>
+                        <div class="flex items-center text-gray-500 text-sm mb-4">
+                            <span class="flex items-center mr-3"><i class="fas fa-road mr-1"></i> 15.000 km</span>
+                            <span class="flex items-center"><i class="fas fa-gas-pump mr-1"></i> Flex</span>
+                        </div>
+                        <div class="border-t border-gray-200 pt-4">
+                            <div class="grid grid-cols-3 gap-2 mb-4">
+                                <span class="text-xs bg-gray-100 py-1 px-2 rounded text-center">
+                                    <i class="fas fa-car mr-1"></i> 2021
+                                </span>
+                                <span class="text-xs bg-gray-100 py-1 px-2 rounded text-center">
+                                    <i class="fas fa-door-open mr-1"></i> 4 portas
+                                </span>
+                                <span class="text-xs bg-gray-100 py-1 px-2 rounded text-center">
+                                    <i class="fas fa-users mr-1"></i> 5
+                                </span>
+                            </div>
+                        </div>
+                        <button onclick="sendWhatsApp('comprar', 'Volkswagen Golf', '2021', '')" 
+                                class="w-full bg-primary hover:bg-secondary text-white py-2 rounded-lg font-medium flex items-center justify-center">
+                            <i class="fab fa-whatsapp mr-2"></i> Solicitar
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Vehicle Card 2 -->
+                <div class="bg-white rounded-lg overflow-hidden shadow-md vehicle-card">
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                             alt="Toyota Corolla" class="w-full h-48 object-cover">
+                        <div class="absolute top-2 right-2 text-white bg-gray-900 bg-opacity-50 rounded-full p-2">
+                            <i class="fas fa-heart hover:text-red-500"></i>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-lg font-semibold text-dark">Toyota Corolla</h3>
+                            <span class="text-primary font-bold">R$ 140.000</span>
+                        </div>
+                        <div class="flex items-center text-gray-500 text-sm mb-4">
+                            <span class="flex items-center mr-3"><i class="fas fa-road mr-1"></i> 20.000 km</span>
+                            <span class="flex items-center"><i class="fas fa-gas-pump mr-1"></i> Flex</span>
+                        </div>
+                        <div class="border-t border-gray-200 pt-4">
+                            <div class="grid grid-cols-3 gap-2 mb-4">
+                                <span class="text-xs bg-gray-100 py-1 px-2 rounded text-center">
+                                    <i class="fas fa-car mr-1"></i> 2022
+                                </span>
+                                <span class="text-xs bg-gray-100 py-1 px-2 rounded text-center">
+                                    <i class="fas fa-door-open mr-1"></i> 4 portas
+                                </span>
+                                <span class="text-xs bg-gray-100 py-1 px-2 rounded text-center">
+                                    <i class="fas fa-users mr-1"></i> 5
+                                </span>
+                            </div>
+                        </div>
+                        <button onclick="sendWhatsApp('comprar', 'Toyota Corolla', '2022', '')" 
+                                class="w-full bg-primary hover:bg-secondary text-white py-2 rounded-lg font-medium flex items-center justify-center">
+                            <i class="fab fa-whatsapp mr-2"></i> Solicitar
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Vehicle Card 3 -->
+                <div class="bg-white rounded-lg overflow-hidden shadow-md vehicle-card">
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1553440569-bcc63803a83d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1625&q=80" 
+                             alt="Jeep Renegade" class="w-full h-48 object-cover">
+                        <div class="absolute top-2 right-2 text-white bg-gray-900 bg-opacity-50 rounded-full p-2">
+                            <i class="fas fa-heart hover:text-red-500"></i>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-lg font-semibold text-dark">Jeep Renegade</h3>
+                            <span class="text-primary font-bold">R$ 90.000</span>
+                        </div>
+                        <div class="flex items-center text-gray-500 text-sm mb-4">
+                            <span class="flex items-center mr-3"><i class="fas fa-road mr-1"></i> 25.000 km</span>
+                            <span class="flex items-center"><i class="fas fa-gas-pump mr-1"></i> Diesel</span>
+                        </div>
+                        <div class="border-t border-gray-200 pt-4">
+                            <div class="grid grid-cols-3 gap-2 mb-4">
+                                <span class="text-xs bg-gray-100 py-1 px-2 rounded text-center">
+                                    <i class="fas fa-car mr-1"></i> 2020
+                                </span>
+                                <span class="text-xs bg-gray-100 py-1 px-2 rounded text-center">
+                                    <i class="fas fa-door-open mr-1"></i> 4 portas
+                                </span>
+                                <span class="text-xs bg-gray-100 py-1 px-2 rounded text-center">
+                                    <i class="fas fa-users mr-1"></i> 5
+                                </span>
+                            </div>
+                        </div>
+                        <button onclick="sendWhatsApp('comprar', 'Jeep Renegade', '2020', '')" 
+                                class="w-full bg-primary hover:bg-secondary text-white py-2 rounded-lg font-medium flex items-center justify-center">
+                            <i class="fab fa-whatsapp mr-2"></i> Solicitar
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Vehicle Card 4 -->
+                <div class="bg-white rounded-lg overflow-hidden shadow-md vehicle-card">
+                    <div class="relative">
+                        <img src="https://images.unsplash.com/photo-1570126618953-d437176e8c79?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1494&q=80" 
+                             alt="BMW X5" class="w-full h-48 object-cover">
+                        <div class="absolute top-2 right-2 text-white bg-gray-900 bg-opacity-50 rounded-full p-2">
+                            <i class="fas fa-heart hover:text-red-500"></i>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-lg font-semibold text-dark">BMW X5</h3>
+                            <span class="text-primary font-bold">R$ 350.000</span>
+                        </div>
+                        <div class="flex items-center text-gray-500 text-sm mb-4">
+                            <span class="flex items-center mr-3"><i class="fas fa-road mr-1"></i> 10.000 km</span>
+                            <span class="flex items-center"><i class="fas fa-gas-pump mr-1"></i> Gasolina</span>
+                        </div>
+                        <div class="border-t border-gray-200 pt-4">
+                            <div class="grid grid-cols-3 gap-2 mb-4">
+                                <span class="text-xs bg-gray-100 py-1 px-2 rounded text-center">
+                                    <i class="fas fa-car mr-1"></i> 2023
+                                </span>
+                                <span class="text-xs bg-gray-100 py-1 px-2 rounded text-center">
+                                    <i class="fas fa-door-open mr-1"></i> 4 portas
+                                </span>
+                                <span class="text-xs bg-gray-100 py-1 px-2 rounded text-center">
+                                    <i class="fas fa-users mr-1"></i> 5
+                                </span>
+                            </div>
+                        </div>
+                        <button onclick="sendWhatsApp('comprar', 'BMW X5', '2023', '')" 
+                                class="w-full bg-primary hover:bg-secondary text-white py-2 rounded-lg font-medium flex items-center justify-center">
+                            <i class="fab fa-whatsapp mr-2"></i> Solicitar
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="#" class="inline-block bg-white hover:bg-gray-100 text-primary border-2 border-primary px-6 py-3 rounded-lg font-medium">
+                    Ver Todos os Veículos
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rental Section -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-dark mb-2">Aluguel de Veículos</h2>
+                <div class="w-20 h-1 bg-primary mx-auto"></div>
+                <p class="text-gray-600 mt-4 max-w-2xl mx-auto">Reserve seu carro agora e tenha a liberdade de viajar quando quiser</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-gradient-to-r from-primary to-secondary p-0.5 rounded-lg">
+                    <div class="bg-white p-6 rounded-lg h-full">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-primary bg-opacity-10 p-3 rounded-full mr-4">
+                                <i class="fas fa-calendar-day text-primary text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold text-dark">Aluguel por Diária</h3>
+                        </div>
+                        <p class="text-gray-600 mb-6">Ideal para quem precisa de um veículo por um curto período, como viagens de negócios ou passeios.</p>
+                        <div class="grid grid-cols-2 gap-4 mb-6">
+                            <div>
+                                <span class="block text-primary font-bold text-2xl">R$ 120</span>
+                                <span class="text-gray-500 text-sm">Econômico/dia</span>
+                            </div>
+                            <div>
+                                <span class="block text-primary font-bold text-2xl">R$ 250</span>
+                                <span class="text-gray-500 text-sm">SUV/dia</span>
+                            </div>
+                        </div>
+                        <button onclick="showRentalForm('diaria')" 
+                                class="w-full bg-primary hover:bg-secondary text-white py-2 rounded-lg font-medium">
+                            Reservar Agora
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="bg-gradient-to-r from-primary to-secondary p-0.5 rounded-lg">
+                    <div class="bg-white p-6 rounded-lg h-full">
+                        <div class="flex items-center mb-4">
+                            <div class="bg-primary bg-opacity-10 p-3 rounded-full mr-4">
+                                <i class="fas fa-calendar-alt text-primary text-xl"></i>
+                            </div>
+                            <h3 class="text-xl font-semibold text-dark">Aluguel Mensal</h3>
+                        </div>
+                        <p class="text-gray-600 mb-6">Para quem precisa de um veículo por um período mais longo com condições especiais e descontos.</p>
+                        <div class="grid grid-cols-2 gap-4 mb-6">
+                            <div>
+                                <span class="block text-primary font-bold text-2xl">R$ 2.500</span>
+                                <span class="text-gray-500 text-sm">Econômico/mês</span>
+                            </div>
+                            <div>
+                                <span class="block text-primary font-bold text-2xl">R$ 4.500</span>
+                                <span class="text-gray-500 text-sm">SUV/mês</span>
+                            </div>
+                        </div>
+                        <button onclick="showRentalForm('mensal')" 
+                                class="w-full bg-primary hover:bg-secondary text-white py-2 rounded-lg font-medium">
+                            Reservar Agora
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Rental Modal (hidden by default) -->
+    <div id="rentalModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg shadow-xl max-w-md w-full max-h-screen overflow-y-auto">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-xl font-bold text-dark">Reserva de Veículo</h3>
+                    <button onclick="hideRentalModal()" class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                
+                <form id="rentalForm">
+                    <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-medium mb-2">Tipo de Veículo</label>
+                        <select id="carType" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary">
+                            <option value="">Selecione...</option>
+                            <option value="Economico">Econômico (ex: Volkswagen Gol)</option>
+                            <option value="Sedan">Sedan (ex: Toyota Corolla)</option>
+                            <option value="SUV">SUV (ex: Jeep Renegade)</option>
+                            <option value="Luxo">Luxo (ex: BMW X5)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="mb-4">
+                            <label class="block text-gray-700 text-sm font-medium mb-2">Local de Retirada</label>
+                            <select id="pickupLocation" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary">
+                                <option value="">Selecione...</option>
+                                <option value="São Paulo - Centro">São Paulo - Centro</option>
+                                <option value="Rio de Janeiro - Copacabana">Rio de Janeiro - Copacabana</option>
+                                <option value="Belo Horizonte - Savassi">Belo Horizonte - Savassi</option>
+                                <option value="Curitiba - Batel">Curitiba - Batel</option>
+                            </select>
+                        </div>
+                        <div class="mb-4">
+                            <label class="block text-gray-700 text-sm font-medium mb-2">Local de Devolução</label>
+                            <select id="dropoffLocation" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary">
+                                <option value="">Selecione...</option>
+                                <option value="Mesmo local">Mesmo local</option>
+                                <option value="São Paulo - Centro">São Paulo - Centro</option>
+                                <option value="Rio de Janeiro - Copacabana">Rio de Janeiro - Copacabana</option>
+                                <option value="Belo Horizonte - Savassi">Belo Horizonte - Savassi</option>
+                                <option value="Curitiba - Batel">Curitiba - Batel</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <div>
+                            <label class="block text-gray-700 text-sm font-medium mb-2">Data de Retirada</label>
+                            <input type="date" id="pickupDate" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary">
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 text-sm font-medium mb-2">Data de Devolução</label>
+                            <input type="date" id="dropoffDate" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary">
+                        </div>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <label class="block text-gray-700 text-sm font-medium mb-2">Seu Nome</label>
+                        <input type="text" id="customerName" class="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary">
+                    </div>
+                    
+                    <button type="button" onclick="confirmRental()" id="confirmButton" 
+                            class="w-full bg-primary hover:bg-secondary text-white py-2 rounded-lg font-medium">
+                        Confirmar Reserva via WhatsApp
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Why Choose Us -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-dark mb-2">Por que escolher a AutoDrive?</h2>
+                <div class="w-20 h-1 bg-primary mx-auto"></div>
+                <p class="text-gray-600 mt-4 max-w-2xl mx-auto">Oferecemos a melhor experiência em compra e aluguel de veículos</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-sm text-center">
+                    <div class="bg-primary bg-opacity-10 p-4 rounded-full inline-block mb-4">
+                        <i class="fas fa-medal text-primary text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-dark">Qualidade Garantida</h3>
+                    <p class="text-gray-600">Todos os nossos veículos passam por uma rigorosa inspeção antes de serem disponibilizados.</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-sm text-center">
+                    <div class="bg-primary bg-opacity-10 p-4 rounded-full inline-block mb-4">
+                        <i class="fas fa-percentage text-primary text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-dark">Melhores Preços</h3>
+                    <p class="text-gray-600">Oferecemos preços competitivos e diversas opções de pagamento para compra e aluguel.</p>
+                </div>
+                
+                <div class="bg-white p-6 rounded-lg shadow-sm text-center">
+                    <div class="bg-primary bg-opacity-10 p-4 rounded-full inline-block mb-4">
+                        <i class="fas fa-headset text-primary text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2 text-dark">Suporte 24/7</h3>
+                    <p class="text-gray-600">Nossa equipe está disponível 24 horas por dia para ajudar com qualquer necessidade.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-dark mb-2">O que nossos clientes dizem</h2>
+                <div class="w-20 h-1 bg-primary mx-auto"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full bg-gray-300 mr-4 overflow-hidden">
+                            <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Joana Silva" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h4 class="font-medium">Joana Silva</h4>
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 italic">"Aluguei um carro para minha viagem e foi uma experiência incrível. O atendimento foi excelente e o carro estava em perfeito estado."</p>
+                </div>
+                
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full bg-gray-300 mr-4 overflow-hidden">
+                            <img src="https://randomuser.me/api/portraits/men/46.jpg" alt="Carlos Mendes" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h4 class="font-medium">Carlos Mendes</h4>
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 italic">"Comprei meu primeiro carro na AutoDrive e fui muito bem atendido. O processo foi transparente e sem complicações."</p>
+                </div>
+                
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full bg-gray-300 mr-4 overflow-hidden">
+                            <img src="https://randomuser.me/api/portraits/women/65.jpg" alt="Ana Oliveira" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h4 class="font-medium">Ana Oliveira</h4>
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 italic">"Excelente frota de veículos. Já aluguei várias vezes para viagens a trabalho e nunca tive problemas. Recomendo!"</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="py-16 bg-primary text-white">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center justify-between">
+                <div class="mb-6 md:mb-0">
+                    <h3 class="text-2xl font-bold mb-2">Receba nossas ofertas especiais</h3>
+                    <p>Cadastre-se e receba promoções exclusivas por e-mail.</p>
+                </div>
+                <div class="w-full md:w-96">
+                    <form class="flex">
+                        <input type="email" placeholder="Seu e-mail" 
+                               class="flex-grow px-4 py-2 rounded-l-lg focus:outline-none text-dark">
+                        <button type="submit" 
+                                class="bg-secondary hover:bg-blue-900 px-6 py-2 rounded-r-lg font-medium">
+                            Cadastrar
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h4 class="text-xl font-bold mb-4">AutoDrive</h4>
+                    <p class="text-gray-300 mb-6">Sua melhor opção em compra e aluguel de veículos com qualidade e transparência.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="hover:text-primary"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="hover:text-primary"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="hover:text-primary"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="hover:text-primary"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h5 class="font-semibold text-lg mb-4">Links Rápidos</h5>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-300 hover:text-primary">Home</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-primary">Comprar Carro</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-primary">Alugar Carro</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-primary">Sobre Nós</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-primary">Contato</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h5 class="font-semibold text-lg mb-4">Contato</h5>
+                    <ul class="space-y-2">
+                        <li class="flex items-center">
+                            <i class="fas fa-map-marker-alt mr-3 text-primary"></i>
+                            <span class="text-gray-300">Av. Paulista, 1000 - São Paulo/SP</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone-alt mr-3 text-primary"></i>
+                            <span class="text-gray-300">(11) 1234-5678</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-3 text-primary"></i>
+                            <span class="text-gray-300">contato@autodrive.com.br</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h5 class="font-semibold text-lg mb-4">Horário de Funcionamento</h5>
+                    <ul class="space-y-2 text-gray-300">
+                        <li>Segunda a Sexta: 9h às 18h</li>
+                        <li>Sábado: 9h às 14h</li>
+                        <li>Domingo: Fechado</li>
+                    </ul>
+                    <div class="mt-6">
+                        <button onclick="window.location.href='#'" 
+                                class="bg-primary hover:bg-secondary px-4 py-2 rounded-lg font-medium">
+                            <i class="fab fa-whatsapp mr-2"></i> Fale Conosco
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-10 pt-6 text-center text-gray-300">
+                <p>&copy; 2023 AutoDrive. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // WhatsApp functions
+        function sendWhatsApp(action, model, year, rentalPeriod) {
+            let phone = "5511999999999"; // Replace with your WhatsApp number
+            let message = "";
+            
+            if(action === "comprar") {
+                message = `Olá! Tenho interesse no veículo ${model} (${year}). Gostaria de mais informações/uma proposta.`;
+            } else if(action === "alugar") {
+                message = `Olá! Gostaria de confirmar a reserva do veículo ${model} para o período de ${rentalPeriod}.`;
+            }
+            
+            window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, '_blank');
+        }
+        
+        function confirmRental() {
+            const carType = document.getElementById('carType').value;
+            const pickupLocation = document.getElementById('pickupLocation').value;
+            const dropoffLocation = document.getElementById('dropoffLocation').value;
+            const pickupDate = document.getElementById('pickupDate').value;
+            const dropoffDate = document.getElementById('dropoffDate').value;
+            const customerName = document.getElementById('customerName').value;
+            
+            if(!carType || !pickupLocation || !pickupDate || !dropoffDate || !customerName) {
+                alert("Por favor, preencha todos os campos obrigatórios.");
+                return;
+            }
+            
+            const formattedPickupDate = new Date(pickupDate).toLocaleDateString('pt-BR');
+            const formattedDropoffDate = new Date(dropoffDate).toLocaleDateString('pt-BR');
+            
+            let phone = "5511999999999"; // Replace with your WhatsApp number
+            let message = `Olá! Gostaria de confirmar a reserva de um veículo ${carType}.\n\n` +
+                          `*Retirada:* ${formattedPickupDate} em ${pickupLocation}\n` +
+                          `*Devolução:* ${formattedDropoffDate} em ${dropoffLocation}\n` +
+                          `*Nome:* ${customerName}\n\n` +
+                          `Por favor, entre em contato para concluir a reserva.`;
+            
+            window.open(`https://wa.me/${phone}?text=${encodeURIComponent(message)}`, '_blank');
+            
+            // Hide modal after sending
+            hideRentalModal();
+        }
+        
+        // Rental modal functions
+        function showRentalForm(type) {
+            document.getElementById('rentalModal').classList.remove('hidden');
+            
+            if(type === 'diaria') {
+                document.getElementById('rentalForm').scrollIntoView({ behavior: 'smooth' });
+                document.getElementById('confirmButton').textContent = 'Reservar Diária via WhatsApp';
+            } else if(type === 'mensal') {
+                document.getElementById('rentalForm').scrollIntoView({ behavior: 'smooth' });
+                document.getElementById('confirmButton').textContent = 'Reservar Mensal via WhatsApp';
+            }
+        }
+        
+        function hideRentalModal() {
+            document.getElementById('rentalModal').classList.add('hidden');
+        }
+        
+        // Simple carousel functionality
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.carousel > div');
+        
+        function showSlide(index) {
+            const carousel = document.querySelector('.carousel');
+            carousel.style.transform = `translateX(-${index * 100}%)`;
+        }
+        
+        // Set up carousel navigation buttons
+        document.querySelectorAll('.carousel-nav button').forEach((button, index) => {
+            button.addEventListener('click', () => {
+                currentSlide = index;
+                showSlide(currentSlide);
+            });
+        });
+        
+        // Auto-advance carousel
+        setInterval(() => {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+        }, 5000);
+    </script>
+</body>
+</html>
